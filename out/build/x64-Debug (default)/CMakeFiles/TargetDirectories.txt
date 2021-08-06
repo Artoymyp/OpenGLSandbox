@@ -1,0 +1,5 @@
+C:/Work/Git/OpenGLSandbox/out/build/x64-Debug (default)/CMakeFiles/STB_IMAGE.dir
+C:/Work/Git/OpenGLSandbox/out/build/x64-Debug (default)/CMakeFiles/GLAD.dir
+C:/Work/Git/OpenGLSandbox/out/build/x64-Debug (default)/CMakeFiles/MySandbox.dir
+C:/Work/Git/OpenGLSandbox/out/build/x64-Debug (default)/CMakeFiles/edit_cache.dir
+C:/Work/Git/OpenGLSandbox/out/build/x64-Debug (default)/CMakeFiles/rebuild_cache.dir

@@ -12,6 +12,7 @@
 #include "Vertex.h"
 
 #include <iostream>
+#include "Placeble_object.h"
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);
@@ -153,22 +154,6 @@ int main()
         Vertex( 0.5f,  0.5f, -0.5f,  0.0f, 0.0f),
         Vertex(-0.5f,  0.5f, -0.5f,  1.0f, 0.0f),
     };
-    // world space positions of our cubes
-    std::vector<glm::vec3> cubePositions = {
-        glm::vec3( 0.0f,  0.0f,  0.0f),
-        glm::vec3( 2.0f,  5.0f, -15.0f),
-        glm::vec3(-1.5f, -2.2f, -2.5f),
-        glm::vec3(-3.8f, -2.0f, -12.3f),
-        glm::vec3( 2.4f, -0.4f, -3.5f)
-    };
-
-    std::vector<glm::vec3> ramp_positions = {
-        glm::vec3(-1.7f,  3.0f, -7.5f),
-        glm::vec3(1.3f, -2.0f, -2.5f),
-        glm::vec3(1.5f,  2.0f, -2.5f),
-        glm::vec3(1.5f,  0.2f, -1.5f),
-        glm::vec3(-1.3f,  1.0f, -1.5f)
-    };
 
     unsigned int VBO, VAO;
     {
@@ -205,6 +190,23 @@ int main()
         glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
         glEnableVertexAttribArray(1);
     }
+
+    // world space positions of our cubes
+    std::vector<Placeble_object> cubePositions = {
+        Placeble_object(glm::vec3( 0.0f,  0.0f,  0.0f)),
+        Placeble_object(glm::vec3( 2.0f,  5.0f, -15.0f)),
+        Placeble_object(glm::vec3(-1.5f, -2.2f, -2.5f)),
+        Placeble_object(glm::vec3(-3.8f, -2.0f, -12.3f)),
+        Placeble_object(glm::vec3( 2.4f, -0.4f, -3.5f))
+    };
+
+    std::vector<Placeble_object> ramp_positions = {
+        Placeble_object(glm::vec3(-1.7f,  3.0f, -7.5f)),
+        Placeble_object(glm::vec3(1.3f, -2.0f, -2.5f)),
+        Placeble_object(glm::vec3(1.5f,  2.0f, -2.5f)),
+        Placeble_object(glm::vec3(1.5f,  0.2f, -1.5f)),
+        Placeble_object(glm::vec3(-1.3f,  1.0f, -1.5f))
+    };
 
     // load and create a texture 
     // -------------------------
@@ -306,7 +308,7 @@ int main()
         {
             // calculate the model matrix for each object and pass it to shader before drawing
             glm::mat4 model = glm::mat4(1.0f); // make sure to initialize matrix to identity matrix first
-            model = glm::translate(model, cubePositions[i]);
+            model = glm::translate(model, cubePositions[i].location);
             float angle = 20.0f * i;
             model = glm::rotate(model, glm::radians(angle), glm::vec3(1.0f, 0.3f, 0.5f));
             ourShader.setMat4("model", model);
@@ -319,7 +321,7 @@ int main()
         {
             // calculate the model matrix for each object and pass it to shader before drawing
             glm::mat4 model = glm::mat4(1.0f); // make sure to initialize matrix to identity matrix first
-            model = glm::translate(model, ramp_positions[i]);
+            model = glm::translate(model, ramp_positions[i].location);
             float angle = 20.0f * i;
             model = glm::rotate(model, glm::radians(angle), glm::vec3(1.0f, 0.3f, 0.5f));
             ourShader.setMat4("model", model);

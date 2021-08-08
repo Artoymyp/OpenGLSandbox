@@ -13,6 +13,7 @@
 
 #include <iostream>
 #include "Placeble_object.h"
+#include "Vertex_array.h"
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);
@@ -154,41 +155,20 @@ int main()
         Vertex( 0.5f,  0.5f, -0.5f,  0.0f, 0.0f),
         Vertex(-0.5f,  0.5f, -0.5f,  1.0f, 0.0f),
     };
-
-    unsigned int VBO, VAO;
+    
+    std::vector<Vertex_array*> vaos;
+    auto vaow = Vertex_array();
     {
-        glGenVertexArrays(1, &VAO);
-        glGenBuffers(1, &VBO);
-
-        glBindVertexArray(VAO);
-
-        glBindBuffer(GL_ARRAY_BUFFER, VBO);
-        glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(Vertex), &vertices[0], GL_STATIC_DRAW);
-
-        // position attribute
-        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
-        glEnableVertexAttribArray(0);
-        // texture coord attribute
-        glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
-        glEnableVertexAttribArray(1);
+        vaos.push_back(&vaow);
+        vaow.activate();
+        vaow.set_vertices(vertices);
     }
-
-    unsigned int VBO1, VAO1;
+    
+    auto vaow1 = Vertex_array();
     {
-        glGenVertexArrays(1, &VAO1);
-        glGenBuffers(1, &VBO1);
-
-        glBindVertexArray(VAO1);
-
-        glBindBuffer(GL_ARRAY_BUFFER, VBO1);
-        glBufferData(GL_ARRAY_BUFFER, ramp_vertices.size() * sizeof(Vertex), &ramp_vertices[0], GL_STATIC_DRAW);
-
-        // position attribute
-        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
-        glEnableVertexAttribArray(0);
-        // texture coord attribute
-        glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
-        glEnableVertexAttribArray(1);
+        vaos.push_back(&vaow1);
+        vaow1.activate();
+        vaow1.set_vertices(ramp_vertices);
     }
 
     // world space positions of our cubes
@@ -199,6 +179,7 @@ int main()
         Placeble_object(glm::vec3(-3.8f, -2.0f, -12.3f)),
         Placeble_object(glm::vec3( 2.4f, -0.4f, -3.5f))
     };
+    vaow.set_model_to(cubePositions);
 
     std::vector<Placeble_object> ramp_positions = {
         Placeble_object(glm::vec3(-1.7f,  3.0f, -7.5f)),
@@ -207,6 +188,7 @@ int main()
         Placeble_object(glm::vec3(1.5f,  0.2f, -1.5f)),
         Placeble_object(glm::vec3(-1.3f,  1.0f, -1.5f))
     };
+    vaow1.set_model_to(ramp_positions);
 
     // load and create a texture 
     // -------------------------
@@ -302,31 +284,20 @@ int main()
         glm::mat4 view = camera.GetViewMatrix();
         ourShader.setMat4("view", view);
 
-        // render boxes
-        glBindVertexArray(VAO);
-        for (unsigned int i = 0; i < cubePositions.size(); i++)
-        {
-            // calculate the model matrix for each object and pass it to shader before drawing
-            glm::mat4 model = glm::mat4(1.0f); // make sure to initialize matrix to identity matrix first
-            model = glm::translate(model, cubePositions[i].location);
-            float angle = 20.0f * i;
-            model = glm::rotate(model, glm::radians(angle), glm::vec3(1.0f, 0.3f, 0.5f));
-            ourShader.setMat4("model", model);
+        // render objects
+        for each (auto vao in vaos) {
+            vao->activate();
+            for (unsigned int i = 0; i < vao->objects.size(); i++)
+            {
+                // calculate the model matrix for each object and pass it to shader before drawing
+                glm::mat4 model = glm::mat4(1.0f); // make sure to initialize matrix to identity matrix first
+                model = glm::translate(model, vao->objects[i]->location);
+                float angle = 20.0f * i;
+                model = glm::rotate(model, glm::radians(angle), glm::vec3(1.0f, 0.3f, 0.5f));
+                ourShader.setMat4("model", model);
 
-            glDrawArrays(GL_TRIANGLES, 0, vertices.size());
-        }
-        // render ramps
-        glBindVertexArray(VAO1);
-        for (unsigned int i = 0; i < ramp_positions.size(); i++)
-        {
-            // calculate the model matrix for each object and pass it to shader before drawing
-            glm::mat4 model = glm::mat4(1.0f); // make sure to initialize matrix to identity matrix first
-            model = glm::translate(model, ramp_positions[i].location);
-            float angle = 20.0f * i;
-            model = glm::rotate(model, glm::radians(angle), glm::vec3(1.0f, 0.3f, 0.5f));
-            ourShader.setMat4("model", model);
-
-            glDrawArrays(GL_TRIANGLES, 0, vertices.size());
+                vao->draw();
+            }
         }
 
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
@@ -335,10 +306,10 @@ int main()
         glfwPollEvents();
     }
 
-    // optional: de-allocate all resources once they've outlived their purpose:
-    // ------------------------------------------------------------------------
-    glDeleteVertexArrays(1, &VAO);
-    glDeleteBuffers(1, &VBO);
+    //// optional: de-allocate all resources once they've outlived their purpose:
+    //// ------------------------------------------------------------------------
+    //glDeleteVertexArrays(1, &VAO);
+    //glDeleteBuffers(1, &VBO);
 
     // glfw: terminate, clearing all previously allocated GLFW resources.
     // ------------------------------------------------------------------

@@ -1,6 +1,13 @@
 cmake_minimum_required (VERSION 2.8)
 cmake_policy(VERSION 2.8)
 
+# Enables integration of unit tests into the VS Test Explorer window.
+enable_testing()
+
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
+
 project (LearnOpenGL)
 
 IF(NOT CMAKE_BUILD_TYPE)
@@ -14,8 +21,6 @@ if(WIN32)
 endif(WIN32)
 
 link_directories(${CMAKE_SOURCE_DIR}/lib)
-
-list(APPEND CMAKE_CXX_FLAGS "-std=c++11")
 
 # find the required packages
 find_package(GLM REQUIRED)
@@ -78,7 +83,8 @@ file(GLOB SOURCE
     "src/*.gs"
 )
 set(NAME "MySandbox")
-add_executable(${NAME} ${SOURCE})
+add_library(${NAME}_lib ${SOURCE})
+add_executable(${NAME} "main.cpp" ${SOURCE})
 target_link_libraries(${NAME} ${LIBS})
 if(WIN32)
     set_target_properties(${NAME} PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/bin")
@@ -114,8 +120,17 @@ if(MSVC)
     configure_file(${CMAKE_SOURCE_DIR}/configuration/visualstudio.vcxproj.user.in ${CMAKE_CURRENT_BINARY_DIR}/${NAME}.vcxproj.user @ONLY)
 endif(MSVC)
 
+include_directories(
+    ${CMAKE_CURRENT_SOURCE_DIR}/src
+    ${CMAKE_CURRENT_SOURCE_DIR}/includes
+)
 
-include_directories(${CMAKE_SOURCE_DIR}/includes)
+target_include_directories(${NAME}_lib PUBLIC
+    ${CMAKE_CURRENT_SOURCE_DIR}/src
+    ${CMAKE_CURRENT_SOURCE_DIR}/includes
+)
+
+add_subdirectory(Tests)
 
 
 

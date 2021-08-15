@@ -1,9 +1,0 @@
-# ninja log v5
-0	23	0	clean	63bc6ea4e62f3343
-4	407	649982471	CMakeFiles/GLAD.dir/src/glad.c.obj	dfcc94de864411a
-0	421	649982471	CMakeFiles/STB_IMAGE.dir/src/stb_image.cpp.obj	5628d5d0ff353820
-10	424	649982471	CMakeFiles/MySandbox.dir/src/stb_image.cpp.obj	3b2536d2dcba73bd
-408	448	649982471	GLAD.lib	1c7190f2b0813856
-422	458	649982471	STB_IMAGE.lib	7170d1a76969ea0e
-6	981	649982472	CMakeFiles/MySandbox.dir/src/camera_class.cpp.obj	2a44841d0711909f
-984	1596	649982473	../../../bin/MySandbox.exe	20157f0a6e3893f5

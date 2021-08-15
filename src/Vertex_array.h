@@ -8,6 +8,7 @@
 #include <glm/gtc/type_ptr.hpp>
 
 #include "Placeble_object.h"
+#include <Face.h>
 
 
 struct Vertex_array {
@@ -36,18 +37,14 @@ struct Vertex_array {
 		if (_vbo) {
 			throw std::exception("Vertices were already set.");
 		}
-		_vertices_count = vertices.size();
+		set_vertices_core(vertices.size(), &vertices[0]);
+	}
 
-		glGenBuffers(1, &_vbo);
-		glBindBuffer(GL_ARRAY_BUFFER, _vbo);
-		glBufferData(GL_ARRAY_BUFFER, _vertices_count * sizeof(Vertex), &vertices[0], GL_STATIC_DRAW);
-
-		// position attribute
-		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)0);
-		glEnableVertexAttribArray(0);
-		// texture coord attribute
-		glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(3 * sizeof(float)));
-		glEnableVertexAttribArray(1);
+	void set_vertices(const std::vector<Face>& faces) {
+		if (_vbo) {
+			throw std::exception("Vertices were already set.");
+		}
+		set_vertices_core(faces.size() * 3, &faces[0]);
 	}
 
 	void set_model_to(const Placeble_object& object) {
@@ -66,6 +63,24 @@ struct Vertex_array {
 		glDrawArrays(GL_TRIANGLES, 0, _vertices_count);
 	}
 
+private:
+	void set_vertices_core(unsigned int vertices_count, const void* vertices) {
+		if (_vbo) {
+			throw std::exception("Vertices were already set.");
+		}
+		_vertices_count = vertices_count;
+
+		glGenBuffers(1, &_vbo);
+		glBindBuffer(GL_ARRAY_BUFFER, _vbo);
+		glBufferData(GL_ARRAY_BUFFER, _vertices_count * sizeof(Vertex), vertices, GL_STATIC_DRAW);
+
+		// position attribute
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)0);
+		glEnableVertexAttribArray(0);
+		// texture coord attribute
+		glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(3 * sizeof(float)));
+		glEnableVertexAttribArray(1);
+	}
 };
 
 #endif

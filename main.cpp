@@ -82,48 +82,72 @@ int main()
 
     // set up vertex data (and buffer(s)) and configure vertex attributes
     // ------------------------------------------------------------------
-    std::vector<Vertex> vertices = {
+    std::vector<Face> vertices = {
+    Face{
         Vertex(-0.5f, -0.5f, -0.5f,  0.0f, 0.0f),
         Vertex( 0.5f, -0.5f, -0.5f,  1.0f, 0.0f),
-        Vertex( 0.5f,  0.5f, -0.5f,  1.0f, 1.0f),
+        Vertex( 0.5f,  0.5f, -0.5f,  1.0f, 1.0f)
+    },
+    Face{
         Vertex( 0.5f,  0.5f, -0.5f,  1.0f, 1.0f),
         Vertex(-0.5f,  0.5f, -0.5f,  0.0f, 1.0f),
-        Vertex(-0.5f, -0.5f, -0.5f,  0.0f, 0.0f),
+        Vertex(-0.5f, -0.5f, -0.5f,  0.0f, 0.0f)
+    },
         
+    Face{
         Vertex(-0.5f, -0.5f,  0.5f,  0.0f, 0.0f),
         Vertex( 0.5f, -0.5f,  0.5f,  1.0f, 0.0f),
-        Vertex( 0.5f,  0.5f,  0.5f,  1.0f, 1.0f),
+        Vertex( 0.5f,  0.5f,  0.5f,  1.0f, 1.0f)
+    },
+    Face{
         Vertex( 0.5f,  0.5f,  0.5f,  1.0f, 1.0f),
         Vertex(-0.5f,  0.5f,  0.5f,  0.0f, 1.0f),
-        Vertex(-0.5f, -0.5f,  0.5f,  0.0f, 0.0f),
+        Vertex(-0.5f, -0.5f,  0.5f,  0.0f, 0.0f)
+    },
         
+    Face{
         Vertex(-0.5f,  0.5f,  0.5f,  1.0f, 0.0f),
         Vertex(-0.5f,  0.5f, -0.5f,  1.0f, 1.0f),
-        Vertex(-0.5f, -0.5f, -0.5f,  0.0f, 1.0f),
+        Vertex(-0.5f, -0.5f, -0.5f,  0.0f, 1.0f)
+    },
+    Face{
         Vertex(-0.5f, -0.5f, -0.5f,  0.0f, 1.0f),
         Vertex(-0.5f, -0.5f,  0.5f,  0.0f, 0.0f),
-        Vertex(-0.5f,  0.5f,  0.5f,  1.0f, 0.0f),
+        Vertex(-0.5f,  0.5f,  0.5f,  1.0f, 0.0f)
+    },
         
+    Face{
         Vertex( 0.5f,  0.5f,  0.5f,  1.0f, 0.0f),
         Vertex( 0.5f,  0.5f, -0.5f,  1.0f, 1.0f),
-        Vertex( 0.5f, -0.5f, -0.5f,  0.0f, 1.0f),
+        Vertex( 0.5f, -0.5f, -0.5f,  0.0f, 1.0f)
+    },
+    Face{
         Vertex( 0.5f, -0.5f, -0.5f,  0.0f, 1.0f),
         Vertex( 0.5f, -0.5f,  0.5f,  0.0f, 0.0f),
-        Vertex( 0.5f,  0.5f,  0.5f,  1.0f, 0.0f),
+        Vertex( 0.5f,  0.5f,  0.5f,  1.0f, 0.0f)
+    },
         
+    Face{
         Vertex(-0.5f, -0.5f, -0.5f,  0.0f, 1.0f),
         Vertex( 0.5f, -0.5f, -0.5f,  1.0f, 1.0f),
-        Vertex( 0.5f, -0.5f,  0.5f,  1.0f, 0.0f),
+        Vertex( 0.5f, -0.5f,  0.5f,  1.0f, 0.0f)
+    },
+    Face{
         Vertex( 0.5f, -0.5f,  0.5f,  1.0f, 0.0f),
         Vertex(-0.5f, -0.5f,  0.5f,  0.0f, 0.0f),
-        Vertex(-0.5f, -0.5f, -0.5f,  0.0f, 1.0f),
+        Vertex(-0.5f, -0.5f, -0.5f,  0.0f, 1.0f)
+    },
         
+    Face{
         Vertex(-0.5f,  0.5f, -0.5f,  0.0f, 1.0f),
         Vertex( 0.5f,  0.5f, -0.5f,  1.0f, 1.0f),
-        Vertex( 0.5f,  0.5f,  0.5f,  1.0f, 0.0f),
+        Vertex( 0.5f,  0.5f,  0.5f,  1.0f, 0.0f)
+    },
+    Face{
         Vertex( 0.5f,  0.5f,  0.5f,  1.0f, 0.0f),
         Vertex(-0.5f,  0.5f,  0.5f,  0.0f, 0.0f),
         Vertex(-0.5f,  0.5f, -0.5f,  0.0f, 1.0f)
+    }
     };
 
     std::vector<Vertex> ramp_vertices = {

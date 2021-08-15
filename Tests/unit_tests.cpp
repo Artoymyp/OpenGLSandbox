@@ -2,6 +2,7 @@
 #include "gmock/gmock.h"
 #include <Vertex.h>
 #include <Face.h>
+#include <World.h>
 
 TEST(VertexTests, Equal) {
 	Vertex v0(0, 0, 0, 0, 0);
@@ -33,3 +34,38 @@ TEST(FaceTests, Equal) {
 	EXPECT_TRUE(f0 != f3);
 }
 
+TEST(FaceTests, FacePlusVec3) {
+	// arrange
+	Face f0{
+		Vertex{0, 0, 1, 0, 0},
+		Vertex{1, 1, 1, 1, 1},
+		Vertex{0, 1, 1, 0, 1}
+	};
+
+	Face expected_face{
+		Vertex{1, 2, 4, 0, 0},
+		Vertex{2, 3, 4, 1, 1},
+		Vertex{1, 3, 4, 0, 1}
+	};
+
+	// act
+	auto f1 = f0 + glm::vec3(1, 2, 3);
+
+	// assert
+	EXPECT_THAT(f1, expected_face);
+}
+
+TEST(VoxelChunk, InitializedByAir)
+{
+	// arrange
+	Voxel_chunk c;
+
+	// assert
+	for (int x = 0; x < c.width; x++) {
+		for (int y = 0; y < c.width; y++) {
+			for (int z = 0; z < c.width; z++) {
+				ASSERT_THAT(c.get_block(x, y, z), Voxel_type::Air);
+			}
+		}
+	}
+}

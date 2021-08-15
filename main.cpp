@@ -14,6 +14,8 @@
 #include "Placeble_object.h"
 #include "Vertex_array.h"
 #include "Texture.h"
+#include <Voxel_chunk.h>
+#include <Voxel_mesh_generator.h>
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);
@@ -181,6 +183,30 @@ int main()
     };
     
     std::vector<Vertex_array*> vaos;
+    auto world_vao = Vertex_array();
+    {
+        vaos.push_back(&world_vao);
+        world_vao.activate();
+    
+        Voxel_chunk c{ 7, 16 };
+        c.set_layer(0, Voxel_type::Stone);
+        c.set_block(0, 1, 0, Voxel_type::Stone);
+        c.set_block(6, 1, 0, Voxel_type::Stone);
+        c.set_block(0, 1, 6, Voxel_type::Stone);
+        c.set_block(6, 1, 6, Voxel_type::Stone);
+        c.set_block(3, 1, 3, Voxel_type::Stone);
+        c.set_block(3, 1, 2, Voxel_type::Stone);
+        c.set_block(3, 1, 4, Voxel_type::Stone);
+        c.set_block(2, 1, 3, Voxel_type::Stone);
+        c.set_block(4, 1, 3, Voxel_type::Stone);
+        c.set_block(3, 3, 3, Voxel_type::Stone);
+        World world;
+        world.set_chunk(0, 0, c);
+        auto world_faces = Voxel_mesh_generator::generate(0, 0, world);
+        world_vao.set_vertices(world_faces);
+        world_vao.set_model_to(Placeble_object{glm::vec3(0,-2,0)});
+    }
+
     auto vaow = Vertex_array();
     {
         vaos.push_back(&vaow);

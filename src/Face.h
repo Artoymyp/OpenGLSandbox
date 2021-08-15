@@ -1,4 +1,5 @@
 #pragma once
+#include <glm/glm.hpp>
 #include "Vertex.h"
 
 struct Face {
@@ -19,6 +20,10 @@ struct Face {
 			lh.v0 == rh.v0 &&
 			lh.v1 == rh.v1 &&
 			lh.v2 == rh.v2;
+	}
+	
+	Face operator+(glm::vec3 vec) const {
+		return Face{v0 + vec, v1 + vec, v2 + vec};
 	}
 
 	friend bool operator!=(const Face& lh, const Face& rh) {

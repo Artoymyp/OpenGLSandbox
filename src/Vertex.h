@@ -1,9 +1,9 @@
 #ifndef VERTEX_H
 #define VERTEX_H
 
-const float Tolerance{ 0.00001 };
+const float Tolerance{ 0.00001f };
 
-bool tol_eq(float lh, float rh) {
+inline bool tol_eq(float lh, float rh) {
 	return std::abs(lh - rh) < Tolerance;
 };
 
@@ -23,6 +23,10 @@ struct Vertex {
 	// Texture coordinates
 	float u;
 	float v;
+
+	Vertex operator+(glm::vec3 vec) const {
+		return Vertex{ x + vec.x, y + vec.y, z + vec.z, u, v };
+	}
 
 	friend bool operator==(const Vertex& lh, const Vertex& rh){
 		return

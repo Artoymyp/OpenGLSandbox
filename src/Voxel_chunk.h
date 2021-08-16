@@ -3,7 +3,8 @@
 
 enum class Voxel_type {
 	Air = 0,
-	Stone
+	Stone,
+	Grass,
 };
 
 struct Voxel_chunk {

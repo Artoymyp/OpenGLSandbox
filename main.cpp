@@ -87,26 +87,26 @@ int main()
     std::vector<Face> vertices = {
     Face{
         Vertex(-0.5f, -0.5f, -0.5f,  0.0f, 0.0f),
-        Vertex( 0.5f, -0.5f, -0.5f,  1.0f, 0.0f),
-        Vertex( 0.5f,  0.5f, -0.5f,  1.0f, 1.0f)
+        Vertex(0.5f, -0.5f, -0.5f,  1.0f, 0.0f),
+        Vertex(0.5f,  0.5f, -0.5f,  1.0f, 1.0f)
     },
     Face{
-        Vertex( 0.5f,  0.5f, -0.5f,  1.0f, 1.0f),
+        Vertex(0.5f,  0.5f, -0.5f,  1.0f, 1.0f),
         Vertex(-0.5f,  0.5f, -0.5f,  0.0f, 1.0f),
         Vertex(-0.5f, -0.5f, -0.5f,  0.0f, 0.0f)
     },
-        
+
     Face{
         Vertex(-0.5f, -0.5f,  0.5f,  0.0f, 0.0f),
-        Vertex( 0.5f, -0.5f,  0.5f,  1.0f, 0.0f),
-        Vertex( 0.5f,  0.5f,  0.5f,  1.0f, 1.0f)
+        Vertex(0.5f, -0.5f,  0.5f,  1.0f, 0.0f),
+        Vertex(0.5f,  0.5f,  0.5f,  1.0f, 1.0f)
     },
     Face{
-        Vertex( 0.5f,  0.5f,  0.5f,  1.0f, 1.0f),
+        Vertex(0.5f,  0.5f,  0.5f,  1.0f, 1.0f),
         Vertex(-0.5f,  0.5f,  0.5f,  0.0f, 1.0f),
         Vertex(-0.5f, -0.5f,  0.5f,  0.0f, 0.0f)
     },
-        
+
     Face{
         Vertex(-0.5f,  0.5f,  0.5f,  1.0f, 0.0f),
         Vertex(-0.5f,  0.5f, -0.5f,  1.0f, 1.0f),
@@ -117,36 +117,36 @@ int main()
         Vertex(-0.5f, -0.5f,  0.5f,  0.0f, 0.0f),
         Vertex(-0.5f,  0.5f,  0.5f,  1.0f, 0.0f)
     },
-        
+
     Face{
-        Vertex( 0.5f,  0.5f,  0.5f,  1.0f, 0.0f),
-        Vertex( 0.5f,  0.5f, -0.5f,  1.0f, 1.0f),
-        Vertex( 0.5f, -0.5f, -0.5f,  0.0f, 1.0f)
+        Vertex(0.5f,  0.5f,  0.5f,  1.0f, 0.0f),
+        Vertex(0.5f,  0.5f, -0.5f,  1.0f, 1.0f),
+        Vertex(0.5f, -0.5f, -0.5f,  0.0f, 1.0f)
     },
     Face{
-        Vertex( 0.5f, -0.5f, -0.5f,  0.0f, 1.0f),
-        Vertex( 0.5f, -0.5f,  0.5f,  0.0f, 0.0f),
-        Vertex( 0.5f,  0.5f,  0.5f,  1.0f, 0.0f)
+        Vertex(0.5f, -0.5f, -0.5f,  0.0f, 1.0f),
+        Vertex(0.5f, -0.5f,  0.5f,  0.0f, 0.0f),
+        Vertex(0.5f,  0.5f,  0.5f,  1.0f, 0.0f)
     },
-        
+
     Face{
         Vertex(-0.5f, -0.5f, -0.5f,  0.0f, 1.0f),
-        Vertex( 0.5f, -0.5f, -0.5f,  1.0f, 1.0f),
-        Vertex( 0.5f, -0.5f,  0.5f,  1.0f, 0.0f)
+        Vertex(0.5f, -0.5f, -0.5f,  1.0f, 1.0f),
+        Vertex(0.5f, -0.5f,  0.5f,  1.0f, 0.0f)
     },
     Face{
-        Vertex( 0.5f, -0.5f,  0.5f,  1.0f, 0.0f),
+        Vertex(0.5f, -0.5f,  0.5f,  1.0f, 0.0f),
         Vertex(-0.5f, -0.5f,  0.5f,  0.0f, 0.0f),
         Vertex(-0.5f, -0.5f, -0.5f,  0.0f, 1.0f)
     },
-        
+
     Face{
         Vertex(-0.5f,  0.5f, -0.5f,  0.0f, 1.0f),
-        Vertex( 0.5f,  0.5f, -0.5f,  1.0f, 1.0f),
-        Vertex( 0.5f,  0.5f,  0.5f,  1.0f, 0.0f)
+        Vertex(0.5f,  0.5f, -0.5f,  1.0f, 1.0f),
+        Vertex(0.5f,  0.5f,  0.5f,  1.0f, 0.0f)
     },
     Face{
-        Vertex( 0.5f,  0.5f,  0.5f,  1.0f, 0.0f),
+        Vertex(0.5f,  0.5f,  0.5f,  1.0f, 0.0f),
         Vertex(-0.5f,  0.5f,  0.5f,  0.0f, 0.0f),
         Vertex(-0.5f,  0.5f, -0.5f,  0.0f, 1.0f)
     }
@@ -154,57 +154,80 @@ int main()
 
     std::vector<Vertex> ramp_vertices = {
         Vertex(-0.5f, -0.5f, -0.5f,  0.0f, 0.0f),
-        Vertex( 0.5f, -0.5f, -0.5f,  1.0f, 0.0f),
-        Vertex( 0.5f,  0.5f, -0.5f,  1.0f, 1.0f),
-        Vertex( 0.5f,  0.5f, -0.5f,  1.0f, 1.0f),
+        Vertex(0.5f, -0.5f, -0.5f,  1.0f, 0.0f),
+        Vertex(0.5f,  0.5f, -0.5f,  1.0f, 1.0f),
+        Vertex(0.5f,  0.5f, -0.5f,  1.0f, 1.0f),
         Vertex(-0.5f,  0.5f, -0.5f,  0.0f, 1.0f),
         Vertex(-0.5f, -0.5f, -0.5f,  0.0f, 0.0f),
-        
+
         Vertex(-0.5f, -0.5f,  0.5f,  0.0f, 0.0f),
-        Vertex( 0.5f, -0.5f, -0.5f,  1.0f, 0.0f),
-        Vertex( 0.5f,  0.5f, -0.5f,  1.0f, 1.0f),
-        Vertex( 0.5f,  0.5f, -0.5f,  1.0f, 1.0f),
+        Vertex(0.5f, -0.5f, -0.5f,  1.0f, 0.0f),
+        Vertex(0.5f,  0.5f, -0.5f,  1.0f, 1.0f),
+        Vertex(0.5f,  0.5f, -0.5f,  1.0f, 1.0f),
         Vertex(-0.5f,  0.5f,  0.5f,  0.0f, 1.0f),
         Vertex(-0.5f, -0.5f,  0.5f,  0.0f, 0.0f),
-        
+
         Vertex(-0.5f,  0.5f,  0.5f,  1.0f, 0.0f),
         Vertex(-0.5f,  0.5f, -0.5f,  1.0f, 1.0f),
         Vertex(-0.5f, -0.5f, -0.5f,  0.0f, 1.0f),
         Vertex(-0.5f, -0.5f, -0.5f,  0.0f, 1.0f),
         Vertex(-0.5f, -0.5f,  0.5f,  0.0f, 0.0f),
         Vertex(-0.5f,  0.5f,  0.5f,  1.0f, 0.0f),
-        
+
         Vertex(-0.5f, -0.5f,  0.5f,  1.0f, 0.0f),
-        Vertex( 0.5f, -0.5f, -0.5f,  1.0f, 1.0f),
+        Vertex(0.5f, -0.5f, -0.5f,  1.0f, 1.0f),
         Vertex(-0.5f, -0.5f, -0.5f,  0.0f, 1.0f),
         Vertex(-0.5f,  0.5f,  0.5f,  0.0f, 1.0f),
-        Vertex( 0.5f,  0.5f, -0.5f,  0.0f, 0.0f),
+        Vertex(0.5f,  0.5f, -0.5f,  0.0f, 0.0f),
         Vertex(-0.5f,  0.5f, -0.5f,  1.0f, 0.0f),
     };
-    
+
+    // load and create a texture 
+    Texture texture1{ FileSystem::getPath("resources/textures/awesomeface.png"), true };
+
+    auto texture_container{ std::make_unique<Texture>(FileSystem::getPath("resources/textures/container.jpg"), false ) };
+    auto texture_grass{ std::make_unique<Texture>( FileSystem::getPath("resources/textures/marble.jpg"), false ) };
+    auto texture_stone{ std::make_unique<Texture>( FileSystem::getPath("resources/textures/grass.png"), true ) };
+    std::map<Voxel_type, std::unique_ptr<Texture>> textures;
+
+    // Create a world's mesh
     std::vector<Vertex_array*> vaos;
-    auto world_vao = Vertex_array();
+    std::vector<std::unique_ptr<Vertex_array>> world_vaos;
+    Placeble_object w_s(glm::vec3(0, -2, 0), texture_stone.get());
+    Placeble_object w_g(glm::vec3(0, -2, 0), texture_grass.get());
+
     {
-        vaos.push_back(&world_vao);
-        world_vao.activate();
-    
         Voxel_chunk c{ 7, 16 };
         c.set_layer(0, Voxel_type::Stone);
-        c.set_block(0, 1, 0, Voxel_type::Stone);
-        c.set_block(6, 1, 0, Voxel_type::Stone);
-        c.set_block(0, 1, 6, Voxel_type::Stone);
-        c.set_block(6, 1, 6, Voxel_type::Stone);
-        c.set_block(3, 1, 3, Voxel_type::Stone);
-        c.set_block(3, 1, 2, Voxel_type::Stone);
-        c.set_block(3, 1, 4, Voxel_type::Stone);
-        c.set_block(2, 1, 3, Voxel_type::Stone);
-        c.set_block(4, 1, 3, Voxel_type::Stone);
+        c.set_block(0, 1, 0, Voxel_type::Grass);
+        c.set_block(6, 1, 0, Voxel_type::Grass);
+        c.set_block(0, 1, 6, Voxel_type::Grass);
+        c.set_block(6, 1, 6, Voxel_type::Grass);
+        c.set_block(3, 1, 3, Voxel_type::Grass);
+        c.set_block(3, 1, 2, Voxel_type::Grass);
+        c.set_block(3, 1, 4, Voxel_type::Grass);
+        c.set_block(2, 1, 3, Voxel_type::Grass);
+        c.set_block(4, 1, 3, Voxel_type::Grass);
         c.set_block(3, 3, 3, Voxel_type::Stone);
         World world;
         world.set_chunk(0, 0, c);
-        auto world_faces = Voxel_mesh_generator::generate(0, 0, world);
-        world_vao.set_vertices(world_faces);
-        world_vao.set_model_to(Placeble_object{glm::vec3(0,-2,0)});
+        auto world_face_groups{ Voxel_mesh_generator::generate(0, 0, world) };
+
+        for each (auto item in world_face_groups) {
+            auto world_vao{ std::make_unique<Vertex_array>() };
+            world_vao->activate();
+            world_vao->set_vertices(item.second);
+            if (item.first == Voxel_type::Stone) {
+                world_vao->set_model_to(w_s);
+            }
+            else {
+                world_vao->set_model_to(w_g);
+            }
+            world_vaos.push_back(std::move(world_vao));
+        }
+    }
+    for each (auto & vao in world_vaos) {
+        vaos.push_back(vao.get());
     }
 
     auto vaow = Vertex_array();
@@ -213,7 +236,7 @@ int main()
         vaow.activate();
         vaow.set_vertices(vertices);
     }
-    
+
     auto vaow1 = Vertex_array();
     {
         vaos.push_back(&vaow1);
@@ -223,26 +246,24 @@ int main()
 
     // world space positions of our cubes
     std::vector<Placeble_object> cubePositions = {
-        Placeble_object(glm::vec3( 0.0f,  0.0f,  0.0f)),
-        Placeble_object(glm::vec3( 2.0f,  5.0f, -15.0f)),
-        Placeble_object(glm::vec3(-1.5f, -2.2f, -2.5f)),
-        Placeble_object(glm::vec3(-3.8f, -2.0f, -12.3f)),
-        Placeble_object(glm::vec3( 2.4f, -0.4f, -3.5f))
+        Placeble_object(glm::vec3(0.0f,  0.0f,  0.0f), texture_container.get()),
+        Placeble_object(glm::vec3(2.0f,  5.0f, -15.0f), texture_container.get()),
+        Placeble_object(glm::vec3(-1.5f, -2.2f, -2.5f), texture_container.get()),
+        Placeble_object(glm::vec3(-3.8f, -2.0f, -12.3f), texture_container.get()),
+        Placeble_object(glm::vec3(2.4f, -0.4f, -3.5f), texture_container.get())
     };
     vaow.set_model_to(cubePositions);
 
     std::vector<Placeble_object> ramp_positions = {
-        Placeble_object(glm::vec3(-1.7f,  3.0f, -7.5f)),
-        Placeble_object(glm::vec3(1.3f, -2.0f, -2.5f)),
-        Placeble_object(glm::vec3(1.5f,  2.0f, -2.5f)),
-        Placeble_object(glm::vec3(1.5f,  0.2f, -1.5f)),
-        Placeble_object(glm::vec3(-1.3f,  1.0f, -1.5f))
+        Placeble_object(glm::vec3(1.3f, -2.0f, -2.5f), texture_container.get()),
+        Placeble_object(glm::vec3(1.5f,  2.0f, -2.5f), texture_container.get()),
+        Placeble_object(glm::vec3(1.5f,  0.2f, -1.5f), texture_container.get()),
+        Placeble_object(glm::vec3(-1.7f,  3.0f, -7.5f), texture_container.get()),
+        Placeble_object(glm::vec3(-1.3f,  1.0f, -1.5f), texture_container.get())
     };
     vaow1.set_model_to(ramp_positions);
 
-    // load and create a texture 
-    Texture texture0{ FileSystem::getPath("resources/textures/container.jpg"), false };
-    Texture texture1{ FileSystem::getPath("resources/textures/awesomeface.png"), true };
+
 
 
     // tell opengl for each sampler to which texture unit it belongs to (only has to be done once)
@@ -272,7 +293,6 @@ int main()
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); 
 
         // bind textures on corresponding texture units
-        texture0.set_to_texture_unit_and_activate(0);
         texture1.set_to_texture_unit_and_activate(1);
 
         // activate shader
@@ -291,6 +311,7 @@ int main()
             vao->activate();
             for (unsigned int i = 0; i < vao->objects.size(); i++)
             {
+                vao->objects[i]->texture->set_to_texture_unit_and_activate(0);
                 // calculate the model matrix for each object and pass it to shader before drawing
                 glm::mat4 model = glm::mat4(1.0f); // make sure to initialize matrix to identity matrix first
                 model = glm::translate(model, vao->objects[i]->location);

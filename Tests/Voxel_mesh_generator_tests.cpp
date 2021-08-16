@@ -22,6 +22,18 @@ struct VoxelMeshGeneratorTests : public ::testing::Test {
 		w.set_chunk(0, 0, chunk);
 		return w;
 	}
+	
+	std::vector<Face> get_faces(const std::map<Voxel_type, std::vector<Face>>& face_descriptors) {
+		std::vector<Face> faces;
+		for each (auto item in face_descriptors)
+		{
+			for each (auto face in item.second)
+			{
+				faces.push_back(face);
+			}
+		}
+		return faces;
+	}
 };
 
 TEST_F(VoxelMeshGeneratorTests, EmptyChunk)
@@ -61,7 +73,7 @@ TEST_F(VoxelMeshGeneratorTests, SingleBlockChunk)
 	};
 
 	// act
-	auto actual_faces = Voxel_mesh_generator::generate(0, 0, w);
+	auto actual_faces = get_faces(Voxel_mesh_generator::generate(0, 0, w));
 
 	// assert
 	EXPECT_THAT(actual_faces, ::testing::UnorderedElementsAreArray(expected_faces));
@@ -86,7 +98,7 @@ TEST_F(VoxelMeshGeneratorTests, FlatChunk)
 	};
 
 	// act
-	auto actual_faces = Voxel_mesh_generator::generate(0, 0, w);
+	auto actual_faces = get_faces(Voxel_mesh_generator::generate(0, 0, w));
 
 	// assert
 	EXPECT_THAT(actual_faces, ::testing::UnorderedElementsAreArray(expected_faces));
@@ -117,7 +129,7 @@ TEST_F(VoxelMeshGeneratorTests, CornerProtrudingBlockLeftFront)
 	};
 
 	// act
-	auto actual_faces = Voxel_mesh_generator::generate(0, 0, w);
+	auto actual_faces = get_faces(Voxel_mesh_generator::generate(0, 0, w));
 
 	// assert
 	EXPECT_THAT(actual_faces, ::testing::UnorderedElementsAreArray(expected_faces));
@@ -148,7 +160,7 @@ TEST_F(VoxelMeshGeneratorTests, CornerProtrudingBlockRightFront)
 	};
 
 	// act
-	auto actual_faces = Voxel_mesh_generator::generate(0, 0, w);
+	auto actual_faces = get_faces(Voxel_mesh_generator::generate(0, 0, w));
 
 	// assert
 	EXPECT_THAT(actual_faces, ::testing::UnorderedElementsAreArray(expected_faces));
@@ -179,7 +191,7 @@ TEST_F(VoxelMeshGeneratorTests, CornerProtrudingBlockLeftBack)
 	};
 
 	// act
-	auto actual_faces = Voxel_mesh_generator::generate(0, 0, w);
+	auto actual_faces = get_faces(Voxel_mesh_generator::generate(0, 0, w));
 
 	// assert
 	EXPECT_THAT(actual_faces, ::testing::UnorderedElementsAreArray(expected_faces));
@@ -210,7 +222,7 @@ TEST_F(VoxelMeshGeneratorTests, CornerProtrudingBlockRightBack)
 	};
 
 	// act
-	auto actual_faces = Voxel_mesh_generator::generate(0, 0, w);
+	auto actual_faces = get_faces(Voxel_mesh_generator::generate(0, 0, w));
 
 	// assert
 	EXPECT_THAT(actual_faces, ::testing::UnorderedElementsAreArray(expected_faces));

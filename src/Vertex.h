@@ -1,5 +1,6 @@
 #ifndef VERTEX_H
 #define VERTEX_H
+#include <glm/glm.hpp>
 
 const float Tolerance{ 0.00001f };
 

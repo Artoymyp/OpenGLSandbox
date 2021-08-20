@@ -1,18 +1,22 @@
 #pragma once
 #include <vector>
+#include <optional>
 #include <glm/glm.hpp>
+#include <learnopengl/shader_m.h>
 
 
 class Line {
-    Shader shader;
+    inline static std::optional<Shader> shader{std::nullopt};
     unsigned int VBO, VAO;
     std::pair<glm::vec3, glm::vec3> points;
     glm::mat4 MVP;
     glm::vec4 lineColor;
 public:
-    Line(glm::vec3 start, glm::vec3 end) : 
-        shader{ Shader{ "Line.vs", "Line.fs" } } 
+    Line(glm::vec3 start, glm::vec3 end) 
     {
+        if (!shader) {
+            shader = Shader{ "Line.vs", "Line.fs" };
+        }
         points.first = start;
         points.second = end;
 
@@ -47,9 +51,9 @@ public:
     }
 
     int draw() {
-        shader.use();
-        shader.setMat4("MVP", MVP);
-        shader.setVec4("color", lineColor);
+        shader->use();
+        shader->setMat4("MVP", MVP);
+        shader->setVec4("color", lineColor);
 
         glBindVertexArray(VAO);
         glDrawArrays(GL_LINES, 0, 2);

@@ -8,7 +8,7 @@ class Line {
     unsigned int VBO, VAO;
     std::pair<glm::vec3, glm::vec3> points;
     glm::mat4 MVP;
-    glm::vec3 lineColor;
+    glm::vec4 lineColor;
 public:
     Line(glm::vec3 start, glm::vec3 end) : 
         shader{ Shader{ "Line.vs", "Line.fs" } } 
@@ -16,7 +16,7 @@ public:
         points.first = start;
         points.second = end;
 
-        lineColor = glm::vec3(1, 1, 1);
+        lineColor = glm::vec4(1, 1, 1, 1);
         
         glGenVertexArrays(1, &VAO);
         glGenBuffers(1, &VBO);
@@ -36,15 +36,20 @@ public:
     void setMVP(glm::mat4 mvp) {
         MVP = mvp;
     }
+    
+    void setColor(glm::vec3 color) {
+        lineColor = glm::vec4(color, 1.0);
 
-    int setColor(glm::vec3 color) {
+    }
+
+    void setColor(glm::vec4 color) {
         lineColor = color;
     }
 
     int draw() {
         shader.use();
         shader.setMat4("MVP", MVP);
-        shader.setVec3("color", lineColor);
+        shader.setVec4("color", lineColor);
 
         glBindVertexArray(VAO);
         glDrawArrays(GL_LINES, 0, 2);

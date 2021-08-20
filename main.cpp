@@ -16,6 +16,7 @@
 #include "Texture.h"
 #include <Voxel_chunk.h>
 #include <Voxel_mesh_generator.h>
+#include "Physics_engine.h"
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);
@@ -193,11 +194,15 @@ int main()
     // Create a world's mesh
     std::vector<Vertex_array*> vaos;
     std::vector<std::unique_ptr<Vertex_array>> world_vaos;
-    Placeble_object w_s(glm::vec3(0, -2, 0), texture_stone.get());
-    Placeble_object w_g(glm::vec3(0, -2, 0), texture_grass.get());
+    Placeble_object w_s(glm::vec3(0, 0, 0), texture_stone.get());
+    Placeble_object w_g(glm::vec3(0, 0, 0), texture_grass.get());
 
+    Physics_engine physical_engine;
+    physical_engine.init();
+    PxScene* scene{ physical_engine.create_scene() };
+    physical_engine.enable_visual_debug(scene);
     {
-        Voxel_chunk c{ 7, 16 };
+        Voxel_chunk c{ 16, 16 };
         c.set_layer(0, Voxel_type::Stone);
         c.set_block(0, 1, 0, Voxel_type::Grass);
         c.set_block(6, 1, 0, Voxel_type::Grass);
@@ -209,11 +214,21 @@ int main()
         c.set_block(2, 1, 3, Voxel_type::Grass);
         c.set_block(4, 1, 3, Voxel_type::Grass);
         c.set_block(3, 3, 3, Voxel_type::Stone);
+        
+        c.set_tree(10, 1, 10);
+        c.set_tree(5, 1, 7);
+        c.set_tree(8, 1, 11);
+        
+        c.set_region(12, 15, 12, 15, 1, 2, Voxel_type::Grass);
+        c.set_region(14, 15, 14, 15, 3, 3, Voxel_type::Grass);
+        c.set_region(12, 15, 11, 11, 1, 1, Voxel_type::Grass);
+
         World world;
         world.set_chunk(0, 0, c);
         auto world_face_groups{ Voxel_mesh_generator::generate(0, 0, world) };
 
         for each (auto item in world_face_groups) {
+            physical_engine.create_terrain(item.second);
             auto world_vao{ std::make_unique<Vertex_array>() };
             world_vao->activate();
             world_vao->set_vertices(item.second);
@@ -277,6 +292,9 @@ int main()
     // -----------
     while (!glfwWindowShouldClose(window))
     {
+        scene->simulate(1.0f / 60.0f);
+        scene->fetchResults(true);
+
         // per-frame time logic
         // --------------------
         float currentFrame = glfwGetTime();
@@ -322,6 +340,8 @@ int main()
                 vao->draw();
             }
         }
+
+        physical_engine.render_visual_debug(scene, projection, view);
 
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
         // -------------------------------------------------------------------------------

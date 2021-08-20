@@ -8,6 +8,36 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
+#if(MSVC)
+#    add_compile_options(
+#        $<$<CONFIG:>:/MT> #---------|
+#        $<$<CONFIG:Debug>:/MTd> #---|-- Statically link the runtime libraries
+#        $<$<CONFIG:Release>:/MT> #--|
+#    )
+#endif()
+
+#set(CMAKE_CXX_FLAGS_RELEASE CACHE "/MT" FORCE)
+#set(CMAKE_CXX_FLAGS_DEBUG CACHE "/MTd" FORCE)
+
+set(CompilerFlags
+        CMAKE_CXX_FLAGS
+        CMAKE_CXX_FLAGS_DEBUG
+        CMAKE_CXX_FLAGS_RELEASE
+        CMAKE_CXX_FLAGS_MINSIZEREL
+        CMAKE_CXX_FLAGS_RELWITHDEBINFO
+        CMAKE_C_FLAGS
+        CMAKE_C_FLAGS_DEBUG
+        CMAKE_C_FLAGS_RELEASE
+        CMAKE_C_FLAGS_MINSIZEREL
+        CMAKE_C_FLAGS_RELWITHDEBINFO
+        )
+foreach(CompilerFlag ${CompilerFlags})
+    string(REPLACE "/MT" "/MD" ${CompilerFlag} "${${CompilerFlag}}")
+    set(${CompilerFlag} "${${CompilerFlag}}" CACHE STRING "msvc compiler flags" FORCE)
+    message("MSVC flags: ${CompilerFlag}:${${CompilerFlag}}")
+endforeach()
+
+
 project (LearnOpenGL)
 
 IF(NOT CMAKE_BUILD_TYPE)
@@ -68,7 +98,15 @@ add_library(STB_IMAGE "src/stb_image.cpp")
 set(LIBS ${LIBS} STB_IMAGE)
 
 add_library(GLAD "src/glad.c")
-set(LIBS ${LIBS} GLAD)
+set(LIBS ${LIBS} 
+    GLAD
+
+    PhysX/PhysX_64
+    PhysX/PhysXCommon_64
+    PhysX/PhysXCooking_64
+    PhysX/PhysXFoundation_64
+    PhysX/PhysXExtensions_static_64
+)
 
 macro(makeLink src dest target)
   add_custom_command(TARGET ${target} POST_BUILD COMMAND ${CMAKE_COMMAND} -E create_symlink ${src} ${dest}  DEPENDS  ${dest} COMMENT "mklink ${src} -> ${dest}")
@@ -85,6 +123,10 @@ file(GLOB SOURCE
 set(NAME "MySandbox")
 add_library(${NAME}_lib ${SOURCE})
 add_executable(${NAME} "main.cpp" ${SOURCE})
+
+#set_property(TARGET ${NAME}_lib PROPERTY MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
+#set_property(TARGET ${NAME} PROPERTY MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
+
 target_link_libraries(${NAME} ${LIBS})
 if(WIN32)
     set_target_properties(${NAME} PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/bin")
@@ -123,12 +165,19 @@ endif(MSVC)
 include_directories(
     ${CMAKE_CURRENT_SOURCE_DIR}/src
     ${CMAKE_CURRENT_SOURCE_DIR}/includes
+    ${CMAKE_CURRENT_SOURCE_DIR}/includes/PhysX
+    ${CMAKE_CURRENT_SOURCE_DIR}/includes/pxshared/include
 )
 
 target_include_directories(${NAME}_lib PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/src
     ${CMAKE_CURRENT_SOURCE_DIR}/includes
 )
+
+file(GLOB PHYSX_DLLS
+  "${CMAKE_SOURCE_DIR}/dlls/PhysX/*.dll"
+)
+file(COPY ${PHYSX_DLLS} DESTINATION ${CMAKE_SOURCE_DIR}/bin)
 
 add_subdirectory(Tests)
 

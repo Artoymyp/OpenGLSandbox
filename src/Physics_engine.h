@@ -5,6 +5,40 @@
 
 using namespace physx;
 
+
+class Callback_owner : public PxUserControllerHitReport, public PxControllerBehaviorCallback, public PxQueryFilterCallback
+{
+
+};
+
+static const float gScaleFactor = 1.5f;
+static const float gStandingSize = 1.0f * gScaleFactor;
+static const float gCrouchingSize = 0.25f * gScaleFactor;
+static const float gControllerRadius = 0.3f * gScaleFactor;
+
+
+struct ControlledActorDesc
+{
+	ControlledActorDesc();
+
+	PxControllerShapeType::Enum		mType;
+	PxExtendedVec3					mPosition;
+	float							mSlopeLimit;
+	float							mContactOffset;
+	float							mStepOffset;
+	float							mInvisibleWallHeight;
+	float							mMaxJumpHeight;
+	float							mRadius;
+	float							mHeight;
+	float							mCrouchHeight;
+	float							mProxyDensity;
+	float							mProxyScale;
+	float							mVolumeGrowth;
+	PxUserControllerHitReport* mReportCallback;
+	PxControllerBehaviorCallback* mBehaviorCallback;
+};
+
+
 struct Physics_engine {
 	~Physics_engine() {
 		if (_physics) {
@@ -151,6 +185,51 @@ struct Physics_engine {
 			l.draw();
 		}
 	}
+	void create_CCT(
+		PxScene& scene, 
+		PxExtendedVec3 controller_initial_position
+	) {
+		mControllerManager = PxCreateControllerManager(scene);
+
+		/*
+		_callback_owner = std::make_unique<Callback_owner>();
+
+		ControlledActorDesc desc;
+		desc.mType = PxControllerShapeType::eCAPSULE;
+		desc.mPosition = controller_initial_position;
+		desc.mSlopeLimit = 0.0f;
+		desc.mContactOffset = 0.01f;
+		desc.mStepOffset = 0.05f;
+		desc.mInvisibleWallHeight = 0.0f;//6.0f
+		desc.mMaxJumpHeight = 0.0f;//4.0f
+		desc.mRadius = gControllerRadius;
+		desc.mHeight = gStandingSize;
+		desc.mCrouchHeight = gCrouchingSize;
+		desc.mReportCallback = _callback_owner.get();
+		desc.mBehaviorCallback = _callback_owner.get();
+		{
+			mActor = SAMPLE_NEW(ControlledActor)(*this);
+			mActor->init(desc, mControllerManager);
+
+			RenderBaseActor* actor0 = mActor->getRenderActorStanding();
+			RenderBaseActor* actor1 = mActor->getRenderActorCrouching();
+			if (actor0)
+				mRenderActors.push_back(actor0);
+			if (actor1)
+				mRenderActors.push_back(actor1);
+		}
+
+		mCCTCamera = SAMPLE_NEW(SampleCCTCameraController)(*this);
+		mCCTCamera->setControlled(&mActor, 0, 1);
+		//	mCCTCamera->setFilterData();
+		mCCTCamera->setFilterCallback(this);
+		mCCTCamera->setGravity(-20.0f);
+
+		setCameraController(mCCTCamera);
+
+		mCCTCamera->setView(0, 0);
+		*/
+	}
 
 	PxScene* create_scene() {
 		PxSceneDesc sceneDesc(_physics->getTolerancesScale());
@@ -165,6 +244,11 @@ struct Physics_engine {
 		sceneDesc.filterShader = PxDefaultSimulationFilterShader;
 
 		_scene = _physics->createScene(sceneDesc);
+
+		_scene->setGravity(PxVec3(0.0f, -9.81f, 0.0f));
+
+
+
 		return _scene;
 	}
 
@@ -176,4 +260,7 @@ struct Physics_engine {
 	PxCooking* _cooking{ nullptr };
 	PxDefaultCpuDispatcher* _cpu_dispatcher{ nullptr };
 	PxScene* _scene{ nullptr };
+	PxControllerManager* mControllerManager;
+
+	std::unique_ptr<Callback_owner> _callback_owner;
 };
